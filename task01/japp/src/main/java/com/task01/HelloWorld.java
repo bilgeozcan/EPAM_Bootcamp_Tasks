@@ -21,12 +21,9 @@ public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
 
     @Override
     public Map<String, Object> handleRequest(Object request, Context context) {
-        System.out.println("Hello from lambda");
-
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("statusCode", 200);
         resultMap.put("message", "Hello from Lambda");
-
         return resultMap;
     }
 }
