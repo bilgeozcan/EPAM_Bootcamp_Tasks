@@ -1,0 +1,8 @@
+.syndicate
+logs/
+.syndicate-config-*/
+.syndicate-config-*
+japp/target/
+app/lambdas/api_handler/node_modules/
+app/lambdas/api_handler/.npm/
+.syndicate-config-*/bundles/

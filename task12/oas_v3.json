@@ -1,0 +1,1084 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "task13_api",
+    "description": "Restaurant table and reservation booking API. The API supports Cognito-based user registration, authentication, table management and reservation management.",
+    "version": "1.0.0"
+  },
+  "x-amazon-apigateway-importexport-version": "1.0",
+  "x-syndicate-server": {
+    "resource_name": "task13_api",
+    "resource_type": "api_gateway",
+    "parameter_type": "stage_name",
+    "parameter_name": "api"
+  },
+  "servers": [
+    {
+      "url": "https://example.execute-api.${region}.amazonaws.com/{basePath}",
+      "variables": {
+        "basePath": {
+          "default": "api"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/signup": {
+      "post": {
+        "summary": "Register a new user",
+        "description": "Creates a Cognito user using the supplied first name, last name, email address and password.",
+        "responses": {
+          "200": {
+            "description": "The request was processed successfully.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or could not be processed.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${region}:${account_id}:function:api_handler:${lambdas_alias_name}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequest"
+              }
+            }
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight request",
+        "description": "Returns the CORS headers required by browser-based API clients.",
+        "responses": {
+          "200": {
+            "description": "CORS preflight response.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empty"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                "method.response.header.Accept-Version": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/signin": {
+      "post": {
+        "summary": "Sign in",
+        "description": "Authenticates an existing Cognito user and returns the ID token used for protected API operations.",
+        "responses": {
+          "200": {
+            "description": "The request was processed successfully.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or could not be processed.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${region}:${account_id}:function:api_handler:${lambdas_alias_name}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInRequest"
+              }
+            }
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight request",
+        "description": "Returns the CORS headers required by browser-based API clients.",
+        "responses": {
+          "200": {
+            "description": "CORS preflight response.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empty"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                "method.response.header.Accept-Version": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/tables": {
+      "get": {
+        "summary": "List tables",
+        "description": "Returns all restaurant tables. A valid Cognito ID token is required.",
+        "responses": {
+          "200": {
+            "description": "The request was processed successfully.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TablesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or could not be processed.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${region}:${account_id}:function:api_handler:${lambdas_alias_name}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
+        },
+        "security": [
+          {
+            "authorizer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a table",
+        "description": "Creates a restaurant table and returns its ID. A valid Cognito ID token is required.",
+        "responses": {
+          "200": {
+            "description": "The request was processed successfully.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableIdResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or could not be processed.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${region}:${account_id}:function:api_handler:${lambdas_alias_name}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableModel"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizer": []
+          }
+        ]
+      },
+      "options": {
+        "summary": "CORS preflight request",
+        "description": "Returns the CORS headers required by browser-based API clients.",
+        "responses": {
+          "200": {
+            "description": "CORS preflight response.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empty"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                "method.response.header.Accept-Version": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/tables/{tableId}": {
+      "get": {
+        "summary": "Get a table",
+        "description": "Returns the table identified by tableId. A valid Cognito ID token is required.",
+        "responses": {
+          "200": {
+            "description": "The request was processed successfully.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or could not be processed.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${region}:${account_id}:function:api_handler:${lambdas_alias_name}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
+        },
+        "security": [
+          {
+            "authorizer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tableId",
+            "in": "path",
+            "required": true,
+            "description": "Unique numeric table identifier.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ]
+      },
+      "options": {
+        "summary": "CORS preflight request",
+        "description": "Returns the CORS headers required by browser-based API clients.",
+        "responses": {
+          "200": {
+            "description": "CORS preflight response.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empty"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                "method.response.header.Accept-Version": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/reservations": {
+      "post": {
+        "summary": "Create a reservation",
+        "description": "Creates a reservation for an existing table. Overlapping reservations are rejected.",
+        "responses": {
+          "200": {
+            "description": "The request was processed successfully.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservationIdResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or could not be processed.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${region}:${account_id}:function:api_handler:${lambdas_alias_name}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationModel"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizer": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "List reservations",
+        "description": "Returns all reservations. A valid Cognito ID token is required.",
+        "responses": {
+          "200": {
+            "description": "The request was processed successfully.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservationsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or could not be processed.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${region}:${account_id}:function:api_handler:${lambdas_alias_name}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
+        },
+        "security": [
+          {
+            "authorizer": []
+          }
+        ]
+      },
+      "options": {
+        "summary": "CORS preflight request",
+        "description": "Returns the CORS headers required by browser-based API clients.",
+        "responses": {
+          "200": {
+            "description": "CORS preflight response.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "$ref": "#/components/headers/AccessControlAllowHeaders"
+              },
+              "Access-Control-Allow-Origin": {
+                "$ref": "#/components/headers/AccessControlAllowOrigin"
+              },
+              "Access-Control-Allow-Methods": {
+                "$ref": "#/components/headers/AccessControlAllowMethods"
+              },
+              "Accept-Version": {
+                "$ref": "#/components/headers/AcceptVersion"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empty"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                "method.response.header.Accept-Version": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    }
+  },
+  "components": {
+    "headers": {
+      "AccessControlAllowHeaders": {
+        "description": "Permitted request headers.",
+        "schema": {
+          "type": "string",
+          "example": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token"
+        }
+      },
+      "AccessControlAllowOrigin": {
+        "description": "Permitted request origin.",
+        "schema": {
+          "type": "string",
+          "example": "*"
+        }
+      },
+      "AccessControlAllowMethods": {
+        "description": "Permitted HTTP methods.",
+        "schema": {
+          "type": "string",
+          "example": "*"
+        }
+      },
+      "AcceptVersion": {
+        "description": "Supported API versions.",
+        "schema": {
+          "type": "string",
+          "example": "*"
+        }
+      }
+    },
+    "schemas": {
+      "Empty": {
+        "title": "Empty response",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Error returned for invalid requests.",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Invalid request"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "MessageResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User successfully registered"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "SignUpRequest": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Jane"
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jane.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "minLength": 12,
+            "description": "Must contain uppercase, lowercase, a number and one of $ % ^ * _ -.",
+            "example": "Aa1$Booking_Test"
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password"
+        ]
+      },
+      "SignInRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jane.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "minLength": 12
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "SignInResponse": {
+        "type": "object",
+        "properties": {
+          "idToken": {
+            "type": "string",
+            "description": "Cognito ID token used in the Authorization header."
+          }
+        },
+        "required": [
+          "idToken"
+        ]
+      },
+      "TableModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 1
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 10
+          },
+          "places": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 4
+          },
+          "isVip": {
+            "type": "boolean",
+            "example": false
+          },
+          "minOrder": {
+            "type": "integer",
+            "minimum": 0,
+            "nullable": true,
+            "example": 100
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "places",
+          "isVip"
+        ]
+      },
+      "TablesResponse": {
+        "type": "object",
+        "properties": {
+          "tables": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableModel"
+            }
+          }
+        },
+        "required": [
+          "tables"
+        ]
+      },
+      "TableIdResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "ReservationModel": {
+        "type": "object",
+        "properties": {
+          "tableNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 10
+          },
+          "clientName": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Jane Doe"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "minLength": 1,
+            "example": "+905551112233"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-08-15"
+          },
+          "slotTimeStart": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+            "example": "13:00"
+          },
+          "slotTimeEnd": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+            "example": "15:00"
+          }
+        },
+        "required": [
+          "tableNumber",
+          "clientName",
+          "phoneNumber",
+          "date",
+          "slotTimeStart",
+          "slotTimeEnd"
+        ]
+      },
+      "ReservationIdResponse": {
+        "type": "object",
+        "properties": {
+          "reservationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        },
+        "required": [
+          "reservationId"
+        ]
+      },
+      "ReservationsResponse": {
+        "type": "object",
+        "properties": {
+          "reservations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReservationModel"
+            }
+          }
+        },
+        "required": [
+          "reservations"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "authorizer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Use the Cognito ID token returned by /signin.",
+        "x-amazon-apigateway-authtype": "cognito_user_pools",
+        "x-amazon-apigateway-authorizer": {
+          "x-syndicate-cognito-userpool-names": [
+            "${booking_userpool}"
+          ],
+          "type": "cognito_user_pools"
+        }
+      }
+    }
+  }
+}
