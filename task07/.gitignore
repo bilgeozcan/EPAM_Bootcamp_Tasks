@@ -2,3 +2,5 @@
 .syndicate
 **/node_modules/
 .syndicate-config-*/bundles/appsync_src/*.zip
+*.zip
+bundles/
