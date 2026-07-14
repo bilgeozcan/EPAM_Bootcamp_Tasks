@@ -2,10 +2,10 @@ type Event {
     id: ID!
     userId: Int!
     createdAt: AWSDateTime!
-    payLoad: EventPayload!
+    payLoad: EventPayLoad!
 }
 
-type EventPayload {
+type EventPayLoad {
     meta: EventMeta!
 }
 
@@ -15,7 +15,10 @@ type EventMeta {
 }
 
 type Mutation {
-    createEvent(userId: Int!, payLoad: AWSJSON!): Event!
+    createEvent(
+        userId: Int!,
+        payLoad: AWSJSON!
+    ): Event!
 }
 
 type Query {
