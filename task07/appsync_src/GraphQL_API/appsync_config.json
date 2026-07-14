@@ -7,12 +7,13 @@
   "data_sources": [
     {
       "name": "EventsDataSource",
-      "description": "DynamoDB Events table data source",
+      "description": "DynamoDB Events data source",
       "type": "AMAZON_DYNAMODB",
       "service_role_name": "appsync_role",
       "dynamodb_config": {
-        "table_name": "Events",
-        "aws_region": "${region}"
+        "table_name": "cmtr-qp4lyifx-Events",
+        "aws_region": "${region}",
+        "use_caller_credentials": false
       }
     }
   ],

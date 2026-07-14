@@ -6,12 +6,12 @@ type Event {
 }
 
 type EventPayload {
-    meta: EventMeta
+    meta: EventMeta!
 }
 
 type EventMeta {
-    key1: Int
-    key2: String
+    key1: Int!
+    key2: String!
 }
 
 type Mutation {
