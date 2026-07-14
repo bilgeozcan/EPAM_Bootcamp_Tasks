@@ -1,0 +1,21 @@
+#set($eventId = $util.autoId())
+#set($createdAt = $util.time.nowISO8601())
+#set($parsedPayload = $util.parseJson($ctx.args.payload))
+{
+  "version": "2018-05-29",
+  "operation": "PutItem",
+  "key": {
+    "id": $util.dynamodb.toDynamoDBJson($eventId)
+  },
+  "attributeValues": {
+    "userId": $util.dynamodb.toDynamoDBJson($ctx.args.userId),
+    "createdAt": $util.dynamodb.toDynamoDBJson($createdAt),
+    "payload": $util.dynamodb.toDynamoDBJson($parsedPayload)
+  },
+  "condition": {
+    "expression": "attribute_not_exists(#id)",
+    "expressionNames": {
+      "#id": "id"
+    }
+  }
+}
