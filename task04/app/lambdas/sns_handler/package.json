@@ -1,0 +1,8 @@
+{
+  "name": "sns-handler",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {}
+}
