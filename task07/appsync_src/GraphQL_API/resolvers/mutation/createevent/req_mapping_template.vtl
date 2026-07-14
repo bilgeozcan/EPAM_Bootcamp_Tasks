@@ -13,9 +13,9 @@
     "payLoad": $util.dynamodb.toDynamoDBJson($parsedPayLoad)
   },
   "condition": {
-    "expression": "attribute_not_exists(#id)",
+    "expression": "attribute_not_exists(#eventId)",
     "expressionNames": {
-      "#id": "id"
+      "#eventId": "id"
     }
   }
 }

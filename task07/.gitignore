@@ -1,4 +1,4 @@
 .syndicate-config-*
 .syndicate
 **/node_modules/
-.syndicate-config-*/bundles/
+.syndicate-config-*/bundles/appsync_src/*.zip

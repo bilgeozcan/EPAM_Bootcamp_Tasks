@@ -1,15 +1,18 @@
 {
-  "appsync_events_policy": {
+  "lambda-basic-execution": {
     "resource_type": "iam_policy",
     "policy_content": {
       "Version": "2012-10-17",
       "Statement": [
         {
-          "Sid": "AllowEventsTableAccess",
+          "Sid": "AllowEventsDynamoDBAccess",
           "Effect": "Allow",
           "Action": [
             "dynamodb:GetItem",
+            "dynamodb:Query",
             "dynamodb:PutItem",
+            "dynamodb:Batch*",
+            "dynamodb:DeleteItem",
             "dynamodb:DescribeTable"
           ],
           "Resource": "*"
@@ -23,7 +26,7 @@
     "principal_service": "appsync",
     "predefined_policies": [],
     "custom_policies": [
-      "appsync_events_policy"
+      "lambda-basic-execution"
     ],
     "allowed_accounts": [],
     "instance_profile": false,
