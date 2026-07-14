@@ -2,14 +2,8 @@
   "name": "GraphQL_API",
   "resource_type": "appsync",
   "dependencies": [
-    {
-      "resource_name": "Events",
-      "resource_type": "dynamodb_table"
-    },
-    {
-      "resource_name": "appsync_role",
-      "resource_type": "iam_role"
-    }
+    { "resource_name": "Events", "resource_type": "dynamodb_table" },
+    { "resource_name": "appsync_role", "resource_type": "iam_role" }
   ],
   "primary_auth_type": "API_KEY",
   "api_key_expiration_days": 7,
@@ -21,7 +15,7 @@
       "type": "AMAZON_DYNAMODB",
       "service_role_name": "appsync_role",
       "dynamodb_config": {
-        "table_name": "Events",
+        "table_name": "${resources_prefix}Events${resources_suffix}",
         "aws_region": "${region}"
       }
     }
@@ -47,9 +41,7 @@
     }
   ],
   "functions": [],
-  "log_config": {
-    "logging_enabled": false
-  },
+  "log_config": { "logging_enabled": false },
   "xray_enabled": false,
   "tags": {},
   "deployment_package": "appsync_GraphQL_API.zip"
