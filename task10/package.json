@@ -1,0 +1,17 @@
+{
+  "name": "task10-aws-cdk-vpc",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node --check bin/task10.js",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy --require-approval never"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.0.0"
+  }
+}
