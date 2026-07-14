@@ -1,0 +1,13 @@
+{
+  "name": "uuid_generator",
+  "version": "1.0.0",
+  "description": "Generates ten UUIDs every minute and stores them in S3",
+  "main": "index.js",
+  "scripts": {
+    "check": "node --check index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.900.0"
+  }
+}

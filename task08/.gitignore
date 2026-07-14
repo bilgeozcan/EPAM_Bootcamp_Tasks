@@ -1,0 +1,4 @@
+.syndicate-config-*
+.syndicate
+.syndicate-config-*/bundles/
+**/node_modules/
