@@ -1,6 +1,6 @@
 #set($eventId = $util.autoId())
 #set($createdAt = $util.time.nowISO8601())
-#set($parsedPayload = $util.parseJson($ctx.args.payload))
+#set($parsedPayLoad = $util.parseJson($ctx.args.payLoad))
 {
   "version": "2018-05-29",
   "operation": "PutItem",
@@ -10,7 +10,7 @@
   "attributeValues": {
     "userId": $util.dynamodb.toDynamoDBJson($ctx.args.userId),
     "createdAt": $util.dynamodb.toDynamoDBJson($createdAt),
-    "payload": $util.dynamodb.toDynamoDBJson($parsedPayload)
+    "payLoad": $util.dynamodb.toDynamoDBJson($parsedPayLoad)
   },
   "condition": {
     "expression": "attribute_not_exists(#id)",

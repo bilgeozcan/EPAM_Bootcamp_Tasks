@@ -2,7 +2,7 @@ type Event {
     id: ID!
     userId: Int!
     createdAt: AWSDateTime!
-    payload: EventPayload!
+    payLoad: EventPayload!
 }
 
 type EventPayload {
@@ -17,7 +17,7 @@ type EventMeta {
 type Mutation {
     createEvent(
         userId: Int!,
-        payload: AWSJSON!
+        payLoad: AWSJSON!
     ): Event!
 }
 
