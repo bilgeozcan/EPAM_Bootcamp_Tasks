@@ -1,0 +1,6 @@
+**/.aws-sam/
+**/__pycache__/
+*.pyc
+invoke-output.json
+api-response.json
+samconfig.toml
