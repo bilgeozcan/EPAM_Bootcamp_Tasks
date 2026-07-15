@@ -1,4 +1,6 @@
-.syndicate-config-*
 .syndicate
-.syndicate-config-*/bundles/
-**/node_modules/
+logs/
+.syndicate-config-*/
+.syndicate-config-*
+japp/target/
+sdk/target/
