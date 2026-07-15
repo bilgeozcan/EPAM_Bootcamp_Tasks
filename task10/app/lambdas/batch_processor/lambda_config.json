@@ -46,7 +46,8 @@
                                                           "parameter":  "master_user_secret_name"
                                                       },
                           "DB_NAME":  "logisticdb",
-                          "DB_PORT":  "5432"
+                          "DB_PORT":  "5432",
+                          "AWS_NODEJS_CONNECTION_REUSE_ENABLED":  "1"
                       },
     "publish_version":  true,
     "alias":  "${lambdas_alias_name}",
