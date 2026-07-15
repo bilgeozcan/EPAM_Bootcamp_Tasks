@@ -1,0 +1,67 @@
+type User {
+  id: ID!
+  email: AWSEmail!
+  name: String!
+  devices: [Device]
+}
+
+type Device {
+  id: ID!
+  name: String!
+  device_type: String!
+  description: String
+  events: [Event]
+}
+
+type EventMeta {
+  createdAt: AWSDateTime
+  message: String
+  severity: String
+}
+
+type Event {
+  id: ID!
+  state: String!
+  meta: EventMeta
+}
+
+input CreateUserInput {
+  email: AWSEmail!
+  name: String!
+}
+
+input CreateDeviceInput {
+  owner_email: AWSEmail!
+  device_name: String!
+  device_type: String!
+  description: String
+}
+
+input CreateEventInput {
+  device_owner_email: AWSEmail!
+  device_name: String!
+  device_type: String!
+  state: String!
+  meta: AWSJSON
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User
+  createDevice(input: CreateDeviceInput!): Device
+  createEvent(input: CreateEventInput!): Event
+}
+
+type Query {
+  getUser(email: AWSEmail!): User
+
+  getDevice(
+    owner_email: AWSEmail!
+    device_name: String!
+    device_type: String!
+  ): Device
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

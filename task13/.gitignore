@@ -1,0 +1,7 @@
+.syndicate
+logs/
+.syndicate-config-*/
+.syndicate-config-*
+node_modules/
+*.log
+.env
