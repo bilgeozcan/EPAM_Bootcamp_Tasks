@@ -1,0 +1,58 @@
+{
+    "version":  "1.0",
+    "name":  "batch_processor",
+    "func_name":  "lambdas/batch_processor/index.handler",
+    "resource_type":  "lambda",
+    "iam_role_name":  "batch_processor-role",
+    "runtime":  "nodejs20.x",
+    "memory":  1024,
+    "timeout":  120,
+    "lambda_path":  "lambdas\\batch_processor",
+    "subnet_ids":  [
+                       "${lambda_sn_id}"
+                   ],
+    "security_group_ids":  [
+                               "${logistic_sg_id}"
+                           ],
+    "dependencies":  [
+                         {
+                             "resource_name":  "logistic-cluster",
+                             "resource_type":  "rds_db_cluster"
+                         },
+                         {
+                             "resource_name":  "data-transfer-storage",
+                             "resource_type":  "s3_bucket"
+                         }
+                     ],
+    "event_sources":  [
+                          {
+                              "resource_type":  "s3_trigger",
+                              "target_bucket":  "data-transfer-storage",
+                              "s3_events":  [
+                                                "s3:ObjectCreated:*"
+                                            ]
+                          }
+                      ],
+    "env_variables":  {
+                          "REGION":  "${region}",
+                          "DB_ENDPOINT":  {
+                                              "resource_name":  "logistic-cluster",
+                                              "resource_type":  "rds_db_cluster",
+                                              "parameter":  "endpoint"
+                                          },
+                          "MASTER_USER_SECRET_NAME":  {
+                                                          "resource_name":  "logistic-cluster",
+                                                          "resource_type":  "rds_db_cluster",
+                                                          "parameter":  "master_user_secret_name"
+                                                      },
+                          "DB_NAME":  "logisticdb",
+                          "DB_PORT":  "5432"
+                      },
+    "publish_version":  true,
+    "alias":  "${lambdas_alias_name}",
+    "ephemeral_storage":  1024,
+    "logs_expiration":  30,
+    "tags":  {
+
+             }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "api_handler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.1087.0",
+    "pg": "^8.22.0"
+  }
+}

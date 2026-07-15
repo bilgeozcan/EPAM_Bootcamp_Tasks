@@ -220,3 +220,4 @@ __marimo__/
 **/.syndicate-config-*
 **/.syndicate
 **/node_modules/
+**/.env
