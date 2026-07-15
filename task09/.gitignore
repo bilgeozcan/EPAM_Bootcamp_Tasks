@@ -1,6 +1,7 @@
-**/.aws-sam/
-**/__pycache__/
-*.pyc
-invoke-output.json
-api-response.json
-samconfig.toml
+.syndicate
+logs/
+.syndicate-config-*/
+.syndicate-config-*
+node_modules/
+dist/
+app/lambdas/processor/node_modules/
